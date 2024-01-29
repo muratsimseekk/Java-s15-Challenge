@@ -19,6 +19,9 @@ public abstract class Book {
 
     private String dateOfPurchase ;
 
+    public Book() {
+    }
+
     public Book(int bookID, String author, String name, double price, Status status, Edition edition, String dateOfPurchase) {
         this.bookID = bookID;
         this.author = author;

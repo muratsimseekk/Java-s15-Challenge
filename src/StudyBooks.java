@@ -7,6 +7,11 @@ import java.util.Set;
 public class StudyBooks extends Book {
 
     private static Set<StudyBooks> studyBooksList = new HashSet<>();
+
+
+    public StudyBooks() {
+    }
+
     public StudyBooks(int bookID, String author, String name, double price, Status status, Edition edition, String dateOfPurchase) {
         super(bookID, author, name, price, status, edition, dateOfPurchase);
     }

@@ -8,6 +8,9 @@ public class Magazines extends Book {
 
     private static Set<Magazines> magazinesSet = new HashSet<>();
 
+    public Magazines() {
+    }
+
     public Magazines(int bookID, String author, String name, double price, Status status, Edition edition, String dateOfPurchase) {
         super(bookID, author, name, price, status, edition, dateOfPurchase);
     }
