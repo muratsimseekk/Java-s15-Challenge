@@ -11,15 +11,13 @@ public class Main {
         Member_Record student = new Student();
         Member_Record faculty = new Faculty();
 
-        Member_Record student2 = new Student(9,"Ali" , "Veli" , "Deli" , Type.FACULTY ,"121212" , 4);
+
 
         List<Student> studentList = Student.getStudentList();
         List<Faculty> facultyList = Faculty.getFacultyList();
 
         Member_Record memberRecord = new Member_Record();
 
-
-        ((Student)student2).addMember(student2) ;
 
         student.addMember(new Student(3,"Aayse","Antep","5332221113", Type.STUDENT,"12.12.2021" ,2));
         student.addMember(new Student(4,"Tugce","Antep","5332221113", Type.FACULTY,"12.12.2021" ,2));

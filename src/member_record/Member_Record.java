@@ -55,8 +55,38 @@ public  class Member_Record {
         }
         return null;
     }
-    public void inc_book_issue () {}
-    public void dec_book_issue(){}
+
+    // Bir kisi 5 den fazla kitabi odunc alamaz . Bunun icin yazilan condition.
+    public void inc_book_issue (int memberId) {
+        for (Member_Record member : memberList){
+            if (member.id == memberId){
+                if (member.noBooksIssue <=5){
+                    member.noBooksIssue += 1;
+                    System.out.println("Member id : " +member.id + " barrowed books number has increased to" + member.noBooksIssue);
+                }
+                else {
+                    System.out.println("Member id : " + member.id + " is not allowed get more than 5 books . ");
+                }
+
+            }
+        }
+    }
+    public void dec_book_issue(int memberId){
+        for (Member_Record member : memberList){
+
+            if (member.id == memberId){
+                if (member.noBooksIssue > 0 && member.noBooksIssue <=5 ){
+                    member.noBooksIssue -=1;
+                    System.out.println("Member id : " +member.id + " has returned the book , number of books decreased to :" + member.noBooksIssue);
+                }
+                else {
+                    System.out.println("Member id : " + member.id + " has already no books .");
+                }
+            }
+
+        }
+
+    }
     public void payBill(){}
 
 
