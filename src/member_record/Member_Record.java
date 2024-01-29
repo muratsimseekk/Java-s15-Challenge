@@ -4,11 +4,11 @@ import com.workintech.enums.Type;
 
 import java.util.*;
 
-public class Member_Record {
+public  class Member_Record {
     private int id ;
     private String name ;
     private String address ;
-    private String phoneNubmer ;
+    private String phoneNumber;
     private Type type ;
 
     private String dateOfMembership ;
@@ -18,16 +18,16 @@ public class Member_Record {
 
     // Set yerine list kullanidim cunku Set ler hashCode lar ile tutuyorlar . memberList filter ederken ( getMember() ) bana oncelik olarak
     // id si eslesenleri getirsin istiyorum .
-    private List<Member_Record> memberList = new ArrayList<>();
+    private  List<Member_Record> memberList = new ArrayList<>();
 
     public Member_Record() {
     }
 
-    public Member_Record(int id, String name, String address, String phoneNubmer, Type type, String dateOfMembership, int noBooksIssue) {
+    public Member_Record(int id, String name, String address, String phoneNumber, Type type, String dateOfMembership, int noBooksIssue) {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.phoneNubmer = phoneNubmer;
+        this.phoneNumber = phoneNumber;
         this.type = type;
         this.dateOfMembership = dateOfMembership;
         this.noBooksIssue = noBooksIssue;
@@ -38,6 +38,9 @@ public class Member_Record {
     }
 
     public List<Member_Record> getMemberList() {
+        memberList.addAll(Student.getStudentList());
+        memberList.addAll(Faculty.getFacultyList());
+        System.out.println("Tum member larin Listesi : ");
         return memberList;
     }
 
@@ -57,6 +60,34 @@ public class Member_Record {
     public void payBill(){}
 
 
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public String getDateOfMembership() {
+        return dateOfMembership;
+    }
+
+    public int getNoBooksIssue() {
+        return noBooksIssue;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -75,7 +106,7 @@ public class Member_Record {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
-                ", phoneNubmer='" + phoneNubmer + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", type=" + type +
                 ", dateOfMembership='" + dateOfMembership + '\'' +
                 ", noBooksIssue=" + noBooksIssue +

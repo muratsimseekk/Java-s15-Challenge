@@ -16,7 +16,6 @@ public abstract class Book {
     private Status status ;
     private Edition edition ;
 
-
     private String dateOfPurchase ;
 
     public Book() {
