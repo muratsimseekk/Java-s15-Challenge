@@ -1,11 +1,13 @@
 import com.workintech.enums.Edition;
 import com.workintech.enums.Status;
 
-import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public abstract class Book {
+
+    private static Set<Book> bookList = new HashSet<>();
 
     private int bookID ;
     private String author ;
@@ -13,7 +15,6 @@ public abstract class Book {
     private double price ;
     private Status status ;
     private Edition edition ;
-
 
 
     private String dateOfPurchase ;
@@ -31,8 +32,17 @@ public abstract class Book {
 
     public abstract void getTitle();
 
-    public void updateStatus () {
-        System.out.println("Updating this book's status : " + this.name + " to " + this.status );
+    public  void addBook(Book book) {
+        bookList.add(book);
+    };
+
+    public void updateStatus (Status status) {
+        this.status = status;
+        System.out.println("Updating this book's status : " + this.name + " to " + status );
+    }
+
+    public static Set<Book> getBookList() {
+        return bookList;
     }
 
     public void getOwner() {}
@@ -42,8 +52,10 @@ public abstract class Book {
     public String getAuthor() {
         return author;
     }
-    public void display() {
-
+    public static void display() {
+        for (Book book : bookList){
+            System.out.println(book);
+        }
     }
 
     public int getBookID() {
