@@ -26,7 +26,8 @@ public class Student extends Member_Record {
             }
     }
 
-
-
-
+    @Override
+    public Member_Record getMember(int memberId) {
+        return super.getMember(memberId);
+    }
 }

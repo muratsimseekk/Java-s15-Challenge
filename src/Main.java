@@ -79,11 +79,17 @@ public class Main {
 
         Person auth = new Author("Ayse Simsek");
 
+
+
         System.out.println("Eklenen Book : "+ ((Author)auth).newBook(new StudyBooks(4, "Tech Geek", "Tech Magazine", 14.99, Status.WAITING_ORDER, Edition.E_BOOK, "2024-02-01")));
 
         System.out.println(((Author)auth).showBook("Ayse Simsek"));
 
+        auth.whoYouAre(auth);
 
+        Student studentPurchase = new Reader();
+
+        System.out.println("Reader name : " + studentPurchase.getMember(2));
 
 
 

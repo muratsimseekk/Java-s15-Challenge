@@ -19,7 +19,7 @@ public class Author implements Person{
     @Override
     public void whoYouAre(Person person) {
         if (person instanceof Author){
-            System.out.println(person + " is Author . ");
+            System.out.println(((Author)person).name + " is Author . ");
         }
     }
 
@@ -45,5 +45,13 @@ public class Author implements Person{
         }
 
         return bookList;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }

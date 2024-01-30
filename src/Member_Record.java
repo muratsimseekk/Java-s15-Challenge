@@ -52,8 +52,8 @@ public  class Member_Record {
         // id si eslesmeyen member icin arama yapilirken , ayni isimdeki farkli kuillanicilari
         // liste halinde bastirmak istesek getMember methodunun tipini ne yapmaliydik ?
         public Member_Record getMember (int memberId ) {
-
-        for (Member_Record member : memberList){
+            List<Member_Record> memberListCopy = getMemberList();
+        for (Member_Record member : memberListCopy){
             if (member.id == memberId) {
                 return member;
             }
