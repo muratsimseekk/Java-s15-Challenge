@@ -1,5 +1,3 @@
-package member_record;
-
 import com.workintech.enums.Type;
 
 import java.util.ArrayList;

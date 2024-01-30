@@ -1,7 +1,4 @@
-package member_record;
-
 import com.workintech.enums.Type;
-import member_record.Member_Record;
 
 import java.util.ArrayList;
 import java.util.List;

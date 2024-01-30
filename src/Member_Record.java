@@ -1,5 +1,3 @@
-package member_record;
-
 import com.workintech.enums.Type;
 
 import java.util.*;
@@ -15,6 +13,13 @@ public  class Member_Record {
 
     private int noBooksIssue ;
 
+
+    Book book =new Book() {
+        @Override
+        public void getTitle() {
+
+        }
+    };
 
     // Set yerine list kullanidim cunku Set ler hashCode lar ile tutuyorlar . memberList filter ederken ( getMember() ) bana oncelik olarak
     // id si eslesenleri getirsin istiyorum .
@@ -44,9 +49,9 @@ public  class Member_Record {
         return memberList;
     }
 
-    // id si eslesmeyen member icin arama yapilirken , ayni isimdeki farkli kuillanicilari
-    // liste halinde bastirmak istesek getMember methodunun tipini ne yapmaliydik ?
-    public Member_Record getMember (int memberId ) {
+        // id si eslesmeyen member icin arama yapilirken , ayni isimdeki farkli kuillanicilari
+        // liste halinde bastirmak istesek getMember methodunun tipini ne yapmaliydik ?
+        public Member_Record getMember (int memberId ) {
 
         for (Member_Record member : memberList){
             if (member.id == memberId) {
@@ -87,8 +92,18 @@ public  class Member_Record {
         }
 
     }
-    public void payBill(){}
 
+    // Pay bill methodu bakilacak . Book ucretini odemesi gerekiyor .
+    public double payBill(double budget){
+        if (budget < book.getPrice()){
+            System.out.println("The budget is not enough to pay bill . ");
+            return budget;
+        }
+        else {
+            System.out.println("Succesfully paid bill . ");
+            return budget-book.getPrice();
+        }
+    }
 
     public int getId() {
         return id;
