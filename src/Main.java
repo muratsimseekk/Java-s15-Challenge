@@ -38,6 +38,9 @@ public class Main {
   System.out.println("Study book list : " + ((StudyBooks)book2).getStudyBooksList()   );
 
   System.out.println("******************");
+  author.newBook(new StudyBooks(18,"Ayse Simsek" , "Scince Study" ,187 ,Status.IN_STOCK ,Edition.E_BOOK,"10.10.2011"));
   author.showBook("Ayse Simsek");
+
+
  }
 }
