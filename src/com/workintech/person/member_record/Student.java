@@ -63,6 +63,7 @@ public class Student extends Member_Record implements Reader {
                                 " has purchased the book. Total amount: " + ((Student) student).totalAmount);
                         iterator.remove();
                         System.out.println(((Book) book).getName() + " has been removed from the book list.");
+                        ((Book)book).setStatus(Status.NO_STOCK);
                         return;
                     }
                 }
@@ -83,10 +84,13 @@ public class Student extends Member_Record implements Reader {
                     if (student.getId() == memberId && student instanceof Student){
                         //Map value enum verilmesi icin once guncellendi sonra value olarak atandi .
                         ((Book)book).setStatus(Status.LENT);
+                        student.inc_book_issue(memberId); // odunc aldigi kitap +1 oldu .
                         studentLentMap.put(memberId,((Book)book).getStatus());
                         System.out.println("Student id: " + student.getId() +
                                 " has lent the book. Book's current status : " + ((Book)book).getStatus());
+                        return;
                     }
+
                 }
             }
             else {
@@ -96,12 +100,37 @@ public class Student extends Member_Record implements Reader {
     }
 
     @Override
-    public void returnBook() {
+    public void returnBook(int memberId , int bookID) {
+
+        Set <Library> bookList = Library.bookList;
+
+        for (Library book : bookList){
+            if (((Book)book).getBookID() == bookID){
+                for (Member_Record student : studentList){
+                    if (student.getId() == memberId){
+
+                        student.dec_book_issue(memberId); // kitabi geri getirdi -1 oldu .
+
+                        ((Book)book).setStatus(Status.IN_STOCK); // kitap geri geldi IN_STOCK diye degistirildi .
+
+                        System.out.println("Student id: " + student.getId() +
+                                " has returned the book. Book's current status : " + ((Book)book).getStatus());
+                    }
+                }
+            }
+        }
 
     }
 
     @Override
-    public void showBook() {
+    public void showBook(int bookID) {
+        Set<Library> bookList = Library.bookList;
+
+        for(Library book : bookList){
+            if (((Book)book).getBookID() == bookID){
+                System.out.println("Book is in system : " + book );
+            }
+        }
 
     }
 
