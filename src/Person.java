@@ -1,7 +1,7 @@
-public interface Person {
-
-     void whoYouAre (Person person) ;
-
-
-
-}
+//public interface Person {
+//
+//     void whoYouAre (Person person) ;
+//
+//
+//
+//}
