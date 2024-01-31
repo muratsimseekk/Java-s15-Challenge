@@ -9,7 +9,7 @@ import com.workintech.library.bookTitle.StudyBooks;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Author extends Person{
+public class Author implements Person{
 
     Book book = new Book();
 

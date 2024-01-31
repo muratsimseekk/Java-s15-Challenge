@@ -20,9 +20,7 @@ public class Book extends Library{
     private Edition edition ;
 
     private String dateOfPurchase ;
-
-
-    private Set <Book> bookSet = new HashSet<>();
+    private static Set<Book> bookSet = new HashSet<>();
 
     public Book() {
     }
@@ -50,6 +48,8 @@ public class Book extends Library{
 //        }
 //    };
     //get title subclass lara gore ytazdir .
+
+
 
 
     public String getAuthor() {
@@ -100,6 +100,7 @@ public class Book extends Library{
         bookSet.add(book);
 
     }
+
 
 
     @Override

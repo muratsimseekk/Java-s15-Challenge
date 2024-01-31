@@ -3,7 +3,9 @@ package com.workintech.person;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Reader extends Person{
+public class Reader implements Person{
+
+
 
     Set<Reader> readerSet = new HashSet<>();
     public Reader() {

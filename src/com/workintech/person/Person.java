@@ -1,9 +1,9 @@
 package com.workintech.person;
 
-public abstract class Person {
+public interface Person {
 
-    String  name ;
+         void whoYouAre();
 
-    public abstract void whoYouAre();
+    }
 
-}
+
