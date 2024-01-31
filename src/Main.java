@@ -5,6 +5,7 @@ import com.workintech.library.Library;
 import com.workintech.library.bookTitle.Journals;
 import com.workintech.library.bookTitle.Magazines;
 import com.workintech.library.bookTitle.StudyBooks;
+import com.workintech.person.Author;
 
 public class Main {
  public static void main(String[] args) {
@@ -14,6 +15,7 @@ public class Main {
 
   Book book2 = new StudyBooks(6, "Alice", "Mathematics", 24.99, Status.IN_STOCK, Edition.SECOND_EDITION, "2024-01-31") ;
 
+  Author author = new Author();
 
 
 
@@ -27,7 +29,7 @@ public class Main {
   library.addBook(new Magazines(4, "Tech Geek", "Tech Magazine", 14.99, Status.IN_STOCK, Edition.E_BOOK, "2024-02-01"));
 
   book2.addBook(new StudyBooks(9, "Scientist", "Science Journal", 19.99, Status.IN_STOCK, Edition.LIBRARY_EDITION, "2024-01-30"));
-  book2.addBook(new StudyBooks(17,"Ayse Simsek" , "PARLA" ,187 ,Status.IN_STOCK ,Edition.E_BOOK,"10.10.2011"));
+  book2.addBook(new StudyBooks(17,"Ayse Simsek" , "Scince Study" ,187 ,Status.IN_STOCK ,Edition.E_BOOK,"10.10.2011"));
   System.out.println("Library book list  : " + library.getBookList());
 
   System.out.println("Book list : " + library.getBookList());
@@ -35,6 +37,7 @@ public class Main {
 
   System.out.println("Study book list : " + ((StudyBooks)book2).getStudyBooksList()   );
 
-  System.out.println();
+  System.out.println("******************");
+  author.showBook("Ayse Simsek");
  }
 }

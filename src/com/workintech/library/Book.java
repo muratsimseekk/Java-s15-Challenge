@@ -51,11 +51,18 @@ public class Book extends Library{
 //    };
     //get title subclass lara gore ytazdir .
 
+
+    public String getAuthor() {
+        return author;
+    }
+
     public void getAuthor(int idBook) {
         for (Library book : getBookList()){
             if (((Book)book).getBookID() == idBook){
                 System.out.println("Book id : " +((Book)book).getBookID());
+                System.out.println("Book name : " +((Book)book).getName());
                 System.out.println("Author name  : "  + ((Book) book).author);
+                System.out.println("***************");
             }
         }
     }
@@ -81,6 +88,10 @@ public class Book extends Library{
             }
         }
 
+    }
+
+    public Set<Book> getBookSet() {
+        return bookSet;
     }
 
     @Override
