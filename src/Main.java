@@ -1,11 +1,14 @@
 import com.workintech.enums.Edition;
 import com.workintech.enums.Status;
+import com.workintech.enums.Type;
 import com.workintech.library.Book;
 import com.workintech.library.Library;
 import com.workintech.library.bookTitle.Journals;
 import com.workintech.library.bookTitle.Magazines;
 import com.workintech.library.bookTitle.StudyBooks;
 import com.workintech.person.Author;
+import com.workintech.person.member_record.Member_Record;
+import com.workintech.person.member_record.Student;
 
 import java.util.Set;
 
@@ -49,7 +52,7 @@ public class Main {
   author.newBook(new StudyBooks(34,"Ayse Simsek" , "Scince Study" ,187 ,Status.IN_STOCK ,Edition.E_BOOK,"10.10.2011"));
 
 
-
+  Member_Record memberRecord = new Member_Record();
 
   book2.addBook(new StudyBooks(21,"Ayse Simsek" , "Scince Study" ,187 ,Status.IN_STOCK ,Edition.E_BOOK,"10.10.2011"));
 
@@ -61,5 +64,20 @@ public class Main {
   author.showBook("Ayse Simsek");
 
   System.out.println("Study book list : " + (((StudyBooks) book2).getStudyBooksList()));
+
+  Student student = new Student();
+  student.addMember(new Student(1,"Murat", Type.STUDENT,"Bugun","Cukurova","111222333444",0));
+  student.addMember(new Student(3,"Ali", Type.STUDENT,"Bugun","Cukurova","111222333444",0));
+  student.addMember(new Student(4,"Veli", Type.STUDENT,"Bugun","Cukurova","111222333444",0));
+
+ student.purchaseBook(1,21);
+ student.purchaseBook(1,4);
+ student.purchaseBook(3,14);
+
+
+  System.out.println("Student member list " + student.getStudentList());;
+
+  System.out.println("Tum memberlarin listesi : " + memberRecord.getMemberList());
+  student.getStudentMap();
  }
 }

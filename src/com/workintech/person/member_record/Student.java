@@ -5,30 +5,30 @@ import com.workintech.library.Book;
 import com.workintech.library.Library;
 import com.workintech.library.Reader;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Student extends Member_Record implements Reader {
 
     private  double totalAmount ;
-    private static List<Student> studentList = new ArrayList<>();
+    private  List<Student> studentList = new ArrayList<>();
 
-
+    Map<Integer , Double> studentMap = new HashMap<>();
 
     public Student() {
     }
 
     public Student(int id, String name, Type type, String dateOfMembership, String address, String phoneNumber, int noBooksIssue) {
         super(id, name, type, dateOfMembership, address, phoneNumber, noBooksIssue);
+
     }
 
-    public static List<Student> getStudentList() {
+    public  List<Student> getStudentList() {
+        System.out.println("Student list guncellendi" );
         return studentList;
     }
 
     public void addMember(Member_Record member) {
-
+        memberList.addAll(((Student) member).studentList);
         System.out.println("Member liste eklendi .");
             if (member instanceof Student) {
                 studentList.add((Student) member);
@@ -37,8 +37,9 @@ public class Student extends Member_Record implements Reader {
     }
 
     @Override
-    public Member_Record getMember(int memberId) {
-        return super.getMember(memberId);
+    public List<Member_Record> getMemberList() {
+
+        return super.getMemberList();
     }
 
     @Override
@@ -46,23 +47,30 @@ public class Student extends Member_Record implements Reader {
 
         Set<Library> bookList = Library.bookList;
 
-        for (Student student : studentList){
+        for (Member_Record student : getMemberList()){
+
            if (student.getId() == memberId ){
+
                for (Library book : bookList){
                    if (((Book)book).getBookID() == bookID){
+                       ((Student)student).totalAmount += ((Book)book).getPrice();
+                       studentMap.put(memberId , ((Student) student).totalAmount ) ;
+                       System.out.println("Student id : " + student.getId() + " has purchased the book . Total amount : " + ((Student)student).totalAmount  );
 
-                       student.totalAmount += ((Book)book).getPrice();
-                       System.out.println("Student id : " + student.getId() + " has purchased the book . Total amount : " + student.totalAmount  );
-                   }
-                   else {
-                       System.out.println("Book id is not valid .");
                    }
                }
 
            }
-           else {
-               System.out.println("Member ID is not valid . Create new member before purchasing .");
-           }
+
+        }
+
+    }
+
+    public void getStudentMap() {
+        Set<Integer> keys = studentMap.keySet();
+        System.out.println("Borclular listesi :" );
+        for (Integer key : keys){
+            System.out.println("Student id : " + key + " , total dept : " + studentMap.get(key) );
         }
     }
 

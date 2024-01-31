@@ -36,24 +36,24 @@ public class Member_Record {
 
     // Set yerine list kullanidim cunku Set ler hashCode lar ile tutuyorlar . memberList filter ederken ( getMember() ) bana oncelik olarak
     // id si eslesenleri getirsin istiyorum .
-    private List<Member_Record> memberList = new ArrayList<>();
+    public static List<Member_Record> memberList = new ArrayList<>();
 
 
     public void addMember (Member_Record member){
         memberList.add(member);
+        if (member instanceof Student){
+            ((Student)member).getStudentList().add((Student) member);
+        }
     }
 
     public List<Member_Record> getMemberList() {
-        memberList.addAll(Student.getStudentList());
-        memberList.addAll(Faculty.getFacultyList());
-        System.out.println("Tum member larin Listesi : ");
         return memberList;
     }
 
         // id si eslesmeyen member icin arama yapilirken , ayni isimdeki farkli kuillanicilari
         // liste halinde bastirmak istesek getMember methodunun tipini ne yapmaliydik ?
-        public Member_Record getMember (int memberId ) {
-            List<Member_Record> memberListCopy = getMemberList();
+        public static Member_Record getMember (int memberId ) {
+            List<Member_Record> memberListCopy = Member_Record.memberList;
         for (Member_Record member : memberListCopy){
             if (member.id == memberId) {
                 return member;
@@ -134,6 +134,7 @@ public class Member_Record {
     public int getNoBooksIssue() {
         return noBooksIssue;
     }
+
 
     @Override
     public String toString() {
