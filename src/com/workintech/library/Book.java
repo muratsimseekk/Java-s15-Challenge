@@ -140,6 +140,38 @@ public class Book extends Library{
         return dateOfPurchase;
     }
 
+    public void setBookID(int bookID) {
+        this.bookID = bookID;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setEdition(Edition edition) {
+        this.edition = edition;
+    }
+
+    public void setDateOfPurchase(String dateOfPurchase) {
+        this.dateOfPurchase = dateOfPurchase;
+    }
+
+    public static void setBookSet(Set<Book> bookSet) {
+        Book.bookSet = bookSet;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

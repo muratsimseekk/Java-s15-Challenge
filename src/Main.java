@@ -34,12 +34,12 @@ public class Main {
 
   book2.addBook(new StudyBooks(9, "Scientist", "Science Journal", 19.99, Status.IN_STOCK, Edition.LIBRARY_EDITION, "2024-01-30"));
   book2.addBook(new StudyBooks(17,"Ayse Simsek" , "Scince Study" ,187 ,Status.IN_STOCK ,Edition.E_BOOK,"10.10.2011"));
-  System.out.println("Library book list  : " + library.getBookList());
-
-  System.out.println("Book list : " + library.getBookList());
 
 
-  System.out.println("Study book list : " + ((StudyBooks)book2).getStudyBooksList()   );
+//  System.out.println("Book list : " + library.getBookList()); // tum kitaplarin listesi .
+
+
+//  System.out.println("Study book list : " + ((StudyBooks)book2).getStudyBooksList()   ); // calisir
 
   System.out.println("******************");
 
@@ -56,14 +56,14 @@ public class Main {
 
   book2.addBook(new StudyBooks(21,"Ayse Simsek" , "Scince Study" ,187 ,Status.IN_STOCK ,Edition.E_BOOK,"10.10.2011"));
 
-  System.out.println("Library book list  : " + library.getBookList());
+//  System.out.println("Library book list  : " + library.getBookList()); // calisir
 
-  System.out.println("Book list : " + library.getBookList());
+
 
   System.out.println(library.getBookList().size());
   author.showBook("Ayse Simsek");
 
-  System.out.println("Study book list : " + (((StudyBooks) book2).getStudyBooksList()));
+//  System.out.println("Study book list : " + (((StudyBooks) book2).getStudyBooksList())); // Study kategorisindeki kitaplarin listesi
 
   Student student = new Student();
   student.addMember(new Student(1,"Murat", Type.STUDENT,"Bugun","Cukurova","111222333444",0));
@@ -75,9 +75,9 @@ public class Main {
  student.purchaseBook(3,14);
 
 
-  System.out.println("Student member list " + student.getStudentList());;
+//  System.out.println("Student member list " + student.getStudentList());; // Student uyeler
 
-  System.out.println("Tum memberlarin listesi : " + memberRecord.getMemberList());
+//  System.out.println("Tum memberlarin listesi : " + memberRecord.getMemberList()); // Tum uyeler
   student.getStudentMap();
  }
 }
