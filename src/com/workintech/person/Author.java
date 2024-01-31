@@ -13,6 +13,7 @@ public class Author extends Person{
 
     Book book = new Book();
 
+    StudyBooks studyBooks = new StudyBooks();
 
     Set<Book> authorSet = new HashSet<>();
 
@@ -37,19 +38,24 @@ public class Author extends Person{
     }
 
     public void newBook(Book book){
+
+
+        library.addBook(book);
         book.addBook(book);
 
         if (book instanceof StudyBooks){
-            System.out.println("New book added to Study Books Category");
-            ((StudyBooks)book).addBook(book);
+            System.out.println("New book added to Study Books Category ********* " + book);
+            StudyBooks.addStudyBook((StudyBooks) book);
         }
         else if (book instanceof Journals){
-            System.out.println("New book added to Journals Category");
-            ((Journals)book).addBook(book);
+            System.out.println("New book added to Journals Category ********* " + book);
+            Journals.addJournalsList((Journals) book );
+
         } else if (book instanceof Magazines) {
-            System.out.println("New book added to Magazines Category");
-            ((Magazines)book).addBook(book);
+            System.out.println("New book added to Magazines Category ********* " + book);
+            Magazines.addMagazines((Magazines) book);
         }
+
     }
 
 }

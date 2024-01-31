@@ -10,10 +10,11 @@ import java.util.Set;
 
 public class StudyBooks extends Book {
 
-    Set<StudyBooks> studyBooksList = new HashSet<>();
+   public static Set<StudyBooks> studyBooksList = new HashSet<>();
 
 
-
+    public StudyBooks() {
+    }
 
     public StudyBooks(int bookID, String author, String name, double price, Status status, Edition edition, String dateOfPurchase) {
         super(bookID, author, name, price, status, edition, dateOfPurchase);
@@ -32,13 +33,17 @@ public class StudyBooks extends Book {
     public Set<StudyBooks> getStudyBooksList() {
         return studyBooksList;
     }
-
+    public static void addStudyBook(StudyBooks book){
+        studyBooksList.add(book);
+    }
 
     @Override
     public void addBook(Book book) {
+
         Library.bookList.add(book);
         if (book instanceof StudyBooks){
             studyBooksList.add((StudyBooks) book) ;
+
         }
 
     }

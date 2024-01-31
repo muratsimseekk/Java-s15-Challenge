@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class Journals extends Book {
 
-    Set<Book> journalsList = new HashSet<>();
+    private  static  Set<Book> journalsList = new HashSet<>();
     public Journals(int bookID, String author, String name, double price, Status status, Edition edition, String dateOfPurchase) {
         super(bookID, author, name, price, status, edition, dateOfPurchase);
     }
@@ -24,6 +24,12 @@ public class Journals extends Book {
 //        }
 //    }
 
+
+    public static void addJournalsList (Journals book){
+
+        journalsList.add(book);
+
+    }
     public Set<Book> getJournalsList() {
         return journalsList;
     }
