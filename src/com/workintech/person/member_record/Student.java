@@ -16,7 +16,8 @@ public class Student extends Member_Record implements Reader {
     // map ile ayni id li kullanicilari key olarak verip ustune tekrar eklememesi icin unique id ozelligini kullandim .
     Map<Integer , Double> studentDeptMap = new HashMap<>();
 
-    Map <Integer , Book > studentLentMap = new HashMap<>();
+
+    Map <Integer ,Set<Book> > studentLentMap = new HashMap<>();
 
     // kitaplarin kimde oldugunu gostericek .
     Map <Integer , Book> studentMap = new HashMap<>();
@@ -84,33 +85,41 @@ public class Student extends Member_Record implements Reader {
 
     @Override
     public void borrowBook(int memberId, int bookID) {
-        Set <Library> bookList = Library.bookList;
+        Set<Library> bookList = Library.bookList;
         Iterator<Library> iterator = bookList.iterator();
 
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             Library book = iterator.next();
-             if (!((Book)book).noStock(bookID)){
+            if (!((Book) book).noStock(bookID)) {
                 System.out.println("Book with ID : " + bookID + " is not in stock . ");
                 return;
-            }
-            else if ((((Book) book).getBookID() == bookID) ){
-                for (Member_Record student : studentList){
-                    if (student.getId() == memberId ){
-                        //Enum degeri degistirildi
-                        ((Book)book).setStatus(Status.LENT);
-                        student.inc_book_issue(memberId); // odunc aldigi kitap +1 oldu .
-                        studentLentMap.put(memberId,(Book)book);
-                        studentMap.put(memberId , (Book) book) ;
+            } else if ((((Book) book).getBookID() == bookID)) {
+                for (Member_Record student : studentList) {
+                    if (student.getId() == memberId) {
+                        // Enum degeri degistirildi
+                        ((Book) book).setStatus(Status.LENT);
+                        student.inc_book_issue(memberId); // odunc aldigi kitap +1 oldu.
+
+                        // Eğer öğrenciye ait bir kitap set daha önce oluşturulmuşsa, map icerisine value olarak ekledim .
+                        if (studentLentMap.containsKey(memberId)) {
+                            studentLentMap.get(memberId).add((Book) book);
+                        } else {
+                            // Eğer öğrenciye ait bir kitap set yoksa, yeni key ile mape ekledim .
+                            Set<Book> lentBooks = new HashSet<>();
+                            lentBooks.add((Book) book);
+                            studentLentMap.put(memberId, lentBooks);
+                        }
+
+                        studentMap.put(memberId, (Book) book);
                         System.out.println("Student id: " + student.getId() +
-                                " has lent the book. Book's current status : " + ((Book)book).getStatus());
+                                " has lent the book. Book's current status : " + ((Book) book).getStatus());
                         return;
                     }
-
                 }
             }
-
         }
     }
+
 
     @Override
     public void returnBook(int memberId , int bookID) {
@@ -119,17 +128,24 @@ public class Student extends Member_Record implements Reader {
 
         for (Library book : bookList){
             if (((Book)book).getBookID() == bookID){
-                for (Member_Record student : studentList){
-                    if (student.getId() == memberId){
+                if (((Book)book).getStatus().equals(Status.IN_STOCK)){
+                    System.out.println("Kitap zaten iade edilmis . ");
+                    return;
+                }
+                else {
+                    for (Member_Record student : studentList){
+                        if (student.getId() == memberId){
 
-                        student.dec_book_issue(memberId); // kitabi geri getirdi -1 oldu .
+                            student.dec_book_issue(memberId); // kitabi geri getirdi -1 oldu .
 
-                        ((Book)book).setStatus(Status.IN_STOCK); // kitap geri geldi IN_STOCK diye degistirildi .
+                            ((Book)book).setStatus(Status.IN_STOCK); // kitap geri geldi IN_STOCK diye degistirildi .
 
-                        System.out.println("Student id: " + student.getId() +
-                                " has returned the book. Book's current status : " + ((Book)book).getStatus());
+                            System.out.println("Student id: " + student.getId() +
+                                    " has returned the book : " + ((Book)book));
+                        }
                     }
                 }
+
             }
         }
 

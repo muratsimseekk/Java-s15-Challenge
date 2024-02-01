@@ -90,9 +90,7 @@ public class Member_Record {
                 }
 
             }
-            else {
-                System.out.println("Member id " + member.id + " has no library membership .");
-            }
+
 
         }
 
