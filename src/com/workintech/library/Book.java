@@ -34,20 +34,20 @@ public class Book extends Library{
         this.edition = edition;
         this.dateOfPurchase = dateOfPurchase;
     }
-//    public  void getTitle(int idOfBook){
-//        for (Library book : getBookList()){
-//            if (((Book)book).getBookID() == idOfBook){
-//                if (((Book)book) instanceof StudyBooks){
-//                    System.out.println("The book title is Study .");
-//                } else if (((Book)book) instanceof Journals) {
-//                    System.out.println("The book title is Journal .");
-//                } else if (((Book)book) instanceof Magazines) {
-//                    System.out.println("The book title is Magazine .");
-//                }
-//            }
-//        }
-//    };
-    //get title subclass lara gore ytazdir .
+    public  void getTitle(int idOfBook){
+        for (Library book : getBookList()){
+            if (((Book)book).getBookID() == idOfBook){
+                if (((Book)book) instanceof StudyBooks){
+                    System.out.println("The book title is Study .");
+                } else if (((Book)book) instanceof Journals) {
+                    System.out.println("The book title is Journal .");
+                } else if (((Book)book) instanceof Magazines) {
+                    System.out.println("The book title is Magazine .");
+                }
+            }
+        }
+    };
+
 
 
 
@@ -172,6 +172,8 @@ public class Book extends Library{
         Book.bookSet = bookSet;
     }
 
+
+    // esitlik bookID ye gore saglanir . Set kullandik . Hashcode a gore bakacak .
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

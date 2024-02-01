@@ -4,6 +4,7 @@ import com.workintech.enums.Type;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Member_Record {
 
@@ -135,6 +136,20 @@ public class Member_Record {
         return noBooksIssue;
     }
 
+
+
+    // esitlik id ye gore saglanir .
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Member_Record that)) return false;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
     @Override
     public String toString() {
