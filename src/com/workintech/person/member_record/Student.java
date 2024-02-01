@@ -38,7 +38,7 @@ public class Student extends Member_Record implements Reader {
     public void addMember(Member_Record member) {
         memberList.addAll(((Student) member).studentList);
         Library.readerList.add(member);
-            if (member instanceof Student ) {
+
                 for (Student student : studentList)
                 {
                     if (student.getId() == member.getId()){
@@ -48,7 +48,7 @@ public class Student extends Member_Record implements Reader {
                 }
                 studentList.add((Student) member);
                 System.out.println("Student List e eklendi : " + member);
-            }
+
     }
 
     @Override
@@ -96,29 +96,39 @@ public class Student extends Member_Record implements Reader {
                 return;
             } else if ((((Book) book).getBookID() == bookID)) {
                 for (Member_Record student : studentList) {
-                    if (student.getId() == memberId) {
+
+                    if (student.getId() == memberId ) {
                         // Enum degeri degistirildi
                         ((Book) book).setStatus(Status.LENT);
-                        student.inc_book_issue(memberId); // odunc aldigi kitap +1 oldu.
+                        inc_book_issue(memberId);
 
-                        // kiralama ucretini yansit .
-                        ((Student) student).totalAmount += ((Book) book).getPrice();
-                        studentDeptMap.put(memberId, ((Student) student).totalAmount);
+                        if (student.getNoBooksIssue()<5){
 
-                        // Eğer öğrenciye ait bir kitap set daha önce oluşturulmuşsa, map icerisine value olarak ekledim .
-                        if (studentLentMap.containsKey(memberId)) {
-                            studentLentMap.get(memberId).add((Book) book);
-                        } else {
-                            // Eğer öğrenciye ait bir kitap set yoksa, yeni key ile mape ekledim .
-                            Set<Book> lentBooks = new HashSet<>();
-                            lentBooks.add((Book) book);
-                            studentLentMap.put(memberId, lentBooks);
+                            // kiralama ucretini yansit .
+                            ((Student) student).totalAmount += ((Book) book).getPrice();
+                            studentDeptMap.put(memberId, ((Student) student).totalAmount);
+
+                            // Eğer öğrenciye ait bir kitap set daha önce oluşturulmuşsa, map icerisine value olarak ekledim .
+                            if (studentLentMap.containsKey(memberId)) {
+                                studentLentMap.get(memberId).add((Book) book);
+
+                            } else {
+                                // Eğer öğrenciye ait bir kitap set yoksa, yeni key ile mape ekledim .
+                                Set<Book> lentBooks = new HashSet<>();
+                                lentBooks.add((Book) book);
+                                studentLentMap.put(memberId, lentBooks);
+                            }
+
+//                        student.inc_book_issue(memberId); // odunc aldigi kitap +1 oldu.
+                            studentMap.put(memberId, (Book) book);
+                            System.out.println("Student id: " + student.getId() +
+                                    " has lent the book  : " + ((Book) book));
+                            return;
+                        }
+                        else {
+                            System.out.println("Student id : " +student.getId()+ " 5 den fazla kitap alinamaz . ");
                         }
 
-                        studentMap.put(memberId, (Book) book);
-                        System.out.println("Student id: " + student.getId() +
-                                " has lent the book. Book's current status : " + ((Book) book).getStatus());
-                        return;
                     }
                 }
             }
@@ -139,14 +149,20 @@ public class Student extends Member_Record implements Reader {
                 }
                 else {
                     for (Member_Record student : studentList){
-                        if (student.getId() == memberId){
+                        if (student.getId() == memberId ){
 
-                            student.dec_book_issue(memberId); // kitabi geri getirdi -1 oldu .
+                          student.dec_book_issue(memberId); // kitabi geri getirdi -1 oldu .
 
                             ((Book)book).setStatus(Status.IN_STOCK); // kitap geri geldi IN_STOCK diye degistirildi .
+                            if (student.getNoBooksIssue()>0){
+                                ((Student) student).totalAmount -= ((Book) book).getPrice();
+                                studentDeptMap.put(memberId, ((Student) student).totalAmount);
+                                studentLentMap.get(memberId).remove((Book) book);
+                                System.out.println("Student id: " + student.getId() +
+                                        " has returned the book : " + ((Book)book));
 
-                            System.out.println("Student id: " + student.getId() +
-                                    " has returned the book : " + ((Book)book));
+                        }
+
                         }
                     }
                 }
@@ -163,7 +179,6 @@ public class Student extends Member_Record implements Reader {
         for(Integer key : keys){
             System.out.println("Student id : " + key + " , own this book : " + studentMap.get(key));
         }
-
     }
 
     public void getStudentMap() {
@@ -187,12 +202,49 @@ public class Student extends Member_Record implements Reader {
     }
 
 
+    @Override
+    public boolean inc_book_issue(int memberId) {
+
+        for (Student student : studentList){
+
+            if (student.getNoBooksIssue() <5){
+                 student.setNoBooksIssue(student.getNoBooksIssue()+1);
+                 return true;
+            }
+
+        }
+        System.out.println("5 den fazla kitap alinamaz. ");
+        return false;
+    }
+
+    @Override
+    public boolean dec_book_issue(int memberId) {
+
+        for (Student student : studentList){
+
+            if (student.getNoBooksIssue() >0){
+                student.setNoBooksIssue(student.getNoBooksIssue()-1);
+                return true;
+            } else if (student.getNoBooksIssue()==0) {
+                System.out.println("Kiralanmis kitabi yok");
+            }
+        }
+
+        return false;
+    }
+
+
+
+    @Override
+    public double payBill(int memberID) {
+        return super.payBill(memberID);
+    }
+
 
     @Override
     public void whoYouAre() {
         System.out.println("Person is a Student . ");
     }
-
 
 
 }

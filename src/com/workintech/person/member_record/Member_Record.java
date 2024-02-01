@@ -62,43 +62,43 @@ public class Member_Record {
     }
 
     // Bir kisi 5 den fazla kitabi odunc alamaz . Bunun icin yazilan condition.
-    public void inc_book_issue (int memberId) {
+    public boolean inc_book_issue (int memberId) {
         for (Member_Record member : memberList){
             if (member.id == memberId){
                 if (member.noBooksIssue <=5){
                     member.noBooksIssue += 1;
                     System.out.println("Member id : " +member.id + " barrowed books number has increased to" + member.noBooksIssue);
+                    return true;
                 }
                 else {
                     System.out.println("Member id : " +member.id + " can not get more than 5 books .");
                 }
-
-
             }
         }
+        return false;
     }
-    public void dec_book_issue(int memberId){
+    public boolean dec_book_issue(int memberId){
         for (Member_Record member : memberList){
 
             if (member.id == memberId){
                 if (member.noBooksIssue > 0 && member.noBooksIssue <=5 ){
                     member.noBooksIssue -=1;
                     System.out.println("Member id : " +member.id + " has returned the book , number of books decreased to :" + member.noBooksIssue);
+                    return true;
                 }
-                else {
-                    System.out.println("Member id " + member.id + " hasn't taken any book from library . ");
-                }
+
 
             }
 
 
         }
-
+        return false;
     }
 
     // Pay bill methodu bakilacak . Book ucretini odemesi gerekiyor .
-//    public double payBill(double budget) {
-//    }
+    public double payBill(int memberID) {
+        return 0 ;
+    }
 
 
     public int getId() {
@@ -130,6 +130,33 @@ public class Member_Record {
     }
 
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public void setDateOfMembership(String dateOfMembership) {
+        this.dateOfMembership = dateOfMembership;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setNoBooksIssue(int noBooksIssue) {
+        this.noBooksIssue = noBooksIssue;
+    }
 
     // esitlik id ye gore saglanir .
     @Override

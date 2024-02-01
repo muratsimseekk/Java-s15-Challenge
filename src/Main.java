@@ -92,14 +92,19 @@ public class Main {
 
 
   book.addBook(new StudyBooks(11, "Alice", "Mathematics", 24.99, Status.IN_STOCK, Edition.SECOND_EDITION, "2024-01-31"));
-  book.addBook(new StudyBooks(12, "Alice", "Chemical", 29.99, Status.IN_STOCK, Edition.SECOND_EDITION, "2024-01-31"));
+  book.addBook(new StudyBooks(15, "Alice", "Chemical", 29.99, Status.IN_STOCK, Edition.SECOND_EDITION, "2024-01-31"));
   book.addBook(new StudyBooks(13, "Alice", "Language", 21.99, Status.IN_STOCK, Edition.SECOND_EDITION, "2024-01-31"));
   book.addBook(new StudyBooks(14, "Alice", "Sport", 34.99, Status.IN_STOCK, Edition.SECOND_EDITION, "2024-01-31"));
 
   book.addBook(new StudyBooks(33,"Kemal Mustafa" , "Scince Study" ,187 ,Status.IN_STOCK ,Edition.E_BOOK,"07.02.2019"));
 
   book.addBook(new Magazines(4, "Tech Geek", "Tech Magazine", 14.99, Status.IN_STOCK, Edition.E_BOOK, "2024-02-01"));
-  book.addBook(new Magazines(9, "Show", "Tech Magazine", 19.99, Status.IN_STOCK, Edition.E_BOOK, "2024-02-01"));
+  book.addBook(new Magazines(17, "Show", "Tech Magazine", 19.99, Status.IN_STOCK, Edition.E_BOOK, "2024-02-01"));
+  book.addBook(new Magazines(18, "Show", "Tech Magazine", 19.99, Status.IN_STOCK, Edition.E_BOOK, "2024-02-01"));
+  book.addBook(new Magazines(19, "Show", "Tech Magazine", 19.99, Status.IN_STOCK, Edition.E_BOOK, "2024-02-01"));
+  book.addBook(new Magazines(20, "Show", "Tech Magazine", 19.99, Status.IN_STOCK, Edition.E_BOOK, "2024-02-01"));
+  book.addBook(new Magazines(21, "Show", "Tech Magazine", 19.99, Status.IN_STOCK, Edition.E_BOOK, "2024-02-01"));
+  book.addBook(new Magazines(22, "Show", "Tech Magazine", 19.99, Status.IN_STOCK, Edition.E_BOOK, "2024-02-01"));
 
   System.out.println("Kitaplarin tam listesi " + (book).getBookList());
 
@@ -155,22 +160,51 @@ public class Main {
   System.out.println("Kitap sistemde var mi ?? : " + ((Book) book).noStock(13));
 
   System.out.println("****************");
-  // Kitap odunc al .
+
+  // Kitap odunc al . bookID 33 NO_STOCK
   student.borrowBook(1,33);
+
+
   System.out.println("****************");
   student.borrowBook(1,13);
   student.borrowBook(1,2);
+
+
   student.borrowBook(1,13); // Kitap kiralandigindan tekrar kiralanamaz. Sistemde yok .
+
+
   student.borrowBook(2,11);
   student.borrowBook(1,14);
   //Kiradaki kitaplarin listesi
+
+
+  System.out.println("***************");
+  student.returnBook(1,2);
+  student.returnBook(1,2);// kitabi 2. defa iade etmeye calismak .
+
+  System.out.println("***************");
+  System.out.println(student.getStudentDeptMap());
+  student.returnBook(1,13);
+  System.out.println("********************");
+  System.out.println("Id li uyelerin borc listesi . ");
+  System.out.println(student.getStudentDeptMap());
+
+  System.out.println("*****************");
+
+  student.borrowBook(3,17);
+  student.borrowBook(3,18);
+  student.borrowBook(3,19);
+  student.borrowBook(3,20);
+  student.borrowBook(3,21);
+  student.borrowBook(3,22);//6. kitap bookID 22 kiralanamayacak. .
+
   student.getStudentLentMap();
+  System.out.println("******************");
+  student.returnBook(3,17);
+  student.returnBook(3,18);
 
-  System.out.println("***************");
-  student.returnBook(1,2);
-  student.returnBook(1,2);
-
-  System.out.println("***************");
+  student.getStudentLentMap();
+  System.out.println("****************");
   System.out.println(student.getStudentDeptMap());;
  }
 }
