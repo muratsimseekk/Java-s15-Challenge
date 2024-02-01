@@ -1,10 +1,9 @@
 package com.workintech.person.member_record;
 
 import com.workintech.enums.Type;
+import com.workintech.library.Library;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Member_Record {
 
@@ -30,9 +29,6 @@ public class Member_Record {
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.noBooksIssue = 0;
-
-        memberList.add(this);
-        System.out.println("Member succefully created . Member id : " + this.id);
     }
 
     // Set yerine list kullanidim cunku Set ler hashCode lar ile tutuyorlar . memberList filter ederken ( getMember() ) bana oncelik olarak
@@ -40,8 +36,10 @@ public class Member_Record {
     public static List<Member_Record> memberList = new ArrayList<>();
 
 
+
     public void addMember (Member_Record member){
         memberList.add(member);
+        Library.readerList.add(member);
         if (member instanceof Student){
             ((Student)member).getStudentList().add((Student) member);
         }
@@ -76,9 +74,6 @@ public class Member_Record {
                 }
 
 
-            }
-            else {
-                System.out.println("Member id " + member.id + " has no library membership .");
             }
         }
     }

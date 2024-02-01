@@ -16,7 +16,7 @@ public class Student extends Member_Record implements Reader {
     // map ile ayni id li kullanicilari key olarak verip ustune tekrar eklememesi icin unique id ozelligini kullandim .
     Map<Integer , Double> studentDeptMap = new HashMap<>();
 
-    Map <Integer , Enum > studentLentMap = new HashMap<>();
+    Map <Integer , Book > studentLentMap = new HashMap<>();
 
     // kitaplarin kimde oldugunu gostericek .
     Map <Integer , Book> studentMap = new HashMap<>();
@@ -36,8 +36,15 @@ public class Student extends Member_Record implements Reader {
 
     public void addMember(Member_Record member) {
         memberList.addAll(((Student) member).studentList);
-        System.out.println("Member liste eklendi .");
-            if (member instanceof Student) {
+        Library.readerList.add(member);
+            if (member instanceof Student ) {
+                for (Student student : studentList)
+                {
+                    if (student.getId() == member.getId()){
+                        System.out.println("Sistemde ayni id de kayitli kullanici var . ID : " + member.getId());
+                        return;
+                    }
+                }
                 studentList.add((Student) member);
                 System.out.println("Student List e eklendi : " + member);
             }
@@ -82,13 +89,17 @@ public class Student extends Member_Record implements Reader {
 
         while (iterator.hasNext()){
             Library book = iterator.next();
-            if (book instanceof Book && ((Book) book).getBookID() == bookID){
+             if (!((Book)book).noStock(bookID)){
+                System.out.println("Book with ID : " + bookID + " is not in stock . ");
+                return;
+            }
+            else if ((((Book) book).getBookID() == bookID) ){
                 for (Member_Record student : studentList){
                     if (student.getId() == memberId ){
-                        //Map value enum verilmesi icin once guncellendi sonra value olarak atandi .
+                        //Enum degeri degistirildi
                         ((Book)book).setStatus(Status.LENT);
                         student.inc_book_issue(memberId); // odunc aldigi kitap +1 oldu .
-                        studentLentMap.put(memberId,((Book)book).getStatus());
+                        studentLentMap.put(memberId,(Book)book);
                         studentMap.put(memberId , (Book) book) ;
                         System.out.println("Student id: " + student.getId() +
                                 " has lent the book. Book's current status : " + ((Book)book).getStatus());
@@ -97,9 +108,7 @@ public class Student extends Member_Record implements Reader {
 
                 }
             }
-            else {
-                System.out.println("Book with ID : " + bookID + " is not in stock . ");
-            }
+
         }
     }
 
@@ -158,6 +167,7 @@ public class Student extends Member_Record implements Reader {
     public void whoYouAre() {
         System.out.println("Person is a Student . ");
     }
+
 
 
 }

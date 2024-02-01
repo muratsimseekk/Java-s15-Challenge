@@ -43,7 +43,6 @@ public class StudyBooks extends Book {
         Library.bookList.add(book);
         if (book instanceof StudyBooks){
             studyBooksList.add((StudyBooks) book) ;
-
         }
 
     }

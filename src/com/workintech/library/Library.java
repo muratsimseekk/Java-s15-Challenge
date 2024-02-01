@@ -1,6 +1,7 @@
 package com.workintech.library;
 
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,7 +10,7 @@ public  class Library {
 
 
     public static Set<Library> bookList = new HashSet<>();
-    Set<Library> readerList = new HashSet<>();
+    public static Collection readerList = new HashSet<>();
 
     public Library() {
     }
@@ -18,7 +19,7 @@ public  class Library {
         return bookList;
     }
 
-    public Set<Library> getReaderList() {
+    public Collection getReaderList() {
         return readerList;
     }
 

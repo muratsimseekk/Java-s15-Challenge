@@ -6,9 +6,7 @@ import com.workintech.library.bookTitle.Journals;
 import com.workintech.library.bookTitle.Magazines;
 import com.workintech.library.bookTitle.StudyBooks;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class Book extends Library{
 
@@ -21,6 +19,11 @@ public class Book extends Library{
 
     private String dateOfPurchase ;
     private static Set<Book> bookSet = new HashSet<>();
+    public  Set<StudyBooks> studyBooksList = new HashSet<>();
+
+    public Set<Journals> journalsList = new HashSet<>();
+
+    public Set <Magazines> magazinesList = new HashSet<>();
 
     public Book() {
     }
@@ -49,8 +52,83 @@ public class Book extends Library{
     };
 
 
+    public Set<Book> getBookByID (int bookID) {
+        Set <Book> result = new HashSet<>();
+        for (Book book : bookSet){
+            if (book.getBookID() == bookID){
+               result.add(book);
+            }
+        }
 
+        return result;
+    }
 
+    public Set <Book> getBookByName (String bookName) {
+        Set <Book> result = new HashSet<>();
+        for (Book book : bookSet){
+            if (book.getName().equalsIgnoreCase(bookName)){
+                result.add(book);
+            }
+        }
+        return result;
+    }
+
+    public Set <Book> getBookByAuthor (String authName ) {
+        Set <Book> result = new HashSet<>();
+
+        for (Book book : bookSet){
+            if (book.getAuthor().equalsIgnoreCase(authName)){
+                result.add(book);
+            }
+        }
+        return result;
+    }
+
+    public Set<Book> updateBook(int bookID , String changeAuthor , String changeName , double changePrice){
+        Set<Book> result = new HashSet<>();
+
+        for (Book book : bookSet){
+            if (book.getBookID()==bookID){
+                book.setAuthor(changeAuthor);
+                book.setName(changeName);
+                book.setPrice(changePrice);
+                System.out.println("Kitabin bilgileri degistirildi .");
+                result.add(book);
+            }
+
+        }
+        return result;
+    }
+
+    public boolean noStock ( int bookID){
+
+        for (Book book : bookSet){
+            if (book.getBookID() == bookID && !book.getStatus().equals(Status.IN_STOCK)){
+                System.out.println("Kitap stokta yok .");
+                return false;
+            }
+
+        }
+
+        return true;
+
+    }
+
+    public void removeBook (int bookID){
+        // Iterator u book cinsinden tanimladim .
+        Iterator<Book> iterator = bookSet.iterator();
+
+        while (iterator.hasNext()){
+
+            Book book = iterator.next(); // her bir kitaba iterator ile erisim sagladim.
+            if (book.getBookID() == bookID){
+                System.out.println(book.getName() + " isimli kitap sistemden kaldirildi. ");
+                iterator.remove(); // kitabi sistemden kaldir .
+                return;
+            }
+        }
+        System.out.println("Book with ID " + bookID + " not found.");
+    }
 
     public String getAuthor() {
         return author;
@@ -99,9 +177,29 @@ public class Book extends Library{
         super.getBookList().add(book);
         bookSet.add(book);
 
+        if (book instanceof StudyBooks){
+            studyBooksList.add((StudyBooks) book);
+        }
+        else if (book instanceof Journals){
+            journalsList.add((Journals) book);
+        } else if (book instanceof Magazines) {
+            magazinesList.add((Magazines) book);
+        }
+
+
     }
 
+    public Set<Journals> getJournalsList() {
+        return journalsList;
+    }
 
+    public Set<Magazines> getMagazinesList() {
+        return magazinesList;
+    }
+
+    public Set<StudyBooks> getStudyBooksList() {
+        return studyBooksList;
+    }
 
     @Override
     public Set<Library> getBookList() {
@@ -109,10 +207,9 @@ public class Book extends Library{
     }
 
     @Override
-    public Set<Library> getReaderList() {
+    public Collection getReaderList() {
         return super.getReaderList();
     }
-
 
     public int getBookID() {
         return bookID;

@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class Magazines extends Book {
 
-    private static Set<Book> magazinesList = new HashSet<>();
+    private static Set<Magazines> magazinesList = new HashSet<>();
     public Magazines(int bookID, String author, String name, double price, Status status, Edition edition, String dateOfPurchase) {
         super(bookID, author, name, price, status, edition, dateOfPurchase);
     }
@@ -24,7 +24,7 @@ public class Magazines extends Book {
 //    }
 
 
-    public  Set<Book> getMagazinesList() {
+    public  Set<Magazines> getMagazinesList() {
         return magazinesList;
     }
 

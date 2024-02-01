@@ -30,7 +30,8 @@ public class Faculty extends Member_Record implements Reader {
 
     @Override
     public void addMember(Member_Record member) {
-
+        Member_Record.memberList.add(member);
+        Library.readerList.add(member);
         System.out.println("Member Listeye eklendi . ");
         if (member instanceof Faculty){
             facultyList.add((Faculty) member);
