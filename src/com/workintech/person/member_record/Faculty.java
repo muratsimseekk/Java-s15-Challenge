@@ -15,7 +15,7 @@ public class Faculty extends Member_Record implements Reader {
     private  List<Faculty> facultyList = new ArrayList<>();
 
     Map<Integer , Double> facultyDebtMap = new HashMap<>();
-    Map <Integer , Enum> facultyLentMap = new HashMap<>();
+    Map <Integer , Set<Book>> facultyLentMap = new HashMap<>();
 
     Map<Integer , Book> facultyMap = new HashMap<>();
 
@@ -70,47 +70,87 @@ public class Faculty extends Member_Record implements Reader {
     }
 
     @Override
-    public void borrowBook(int facultyID, int bookID) {
-        Set <Library> bookList = Library.bookList;
+    public void borrowBook(int memberId, int bookID) {
+        Set<Library> bookList = Library.bookList;
         Iterator<Library> iterator = bookList.iterator();
 
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             Library book = iterator.next();
-            if (book instanceof Book && ((Book) book).getBookID() == bookID){
-                for (Member_Record faculty : facultyList){
-                    if (faculty.getId() == facultyID ){
-                        //Map value enum verilmesi icin once guncellendi sonra value olarak atandi .
-                        ((Book)book).setStatus(Status.LENT);
-                        faculty.inc_book_issue(facultyID); // odunc aldigi kitap +1 oldu .
-                        facultyLentMap.put(facultyID,((Book)book).getStatus());
-                        facultyMap.put(facultyID , ((Book) book)); // borrow oldugunda faculty idsi ile hangi kitap oldugunu bir map e aldik .
-                        System.out.println("Faculty id: " + faculty.getId() +
-                                " has lent the book. Book's current status : " + ((Book)book).getStatus());
-                        return;
+            if (!((Book) book).noStock(bookID)) {
+                System.out.println("Book with ID : " + bookID + " is not in stock . ");
+                return;
+            } else if ((((Book) book).getBookID() == bookID)) {
+                for (Member_Record faculty : facultyList) {
+
+                    if (faculty.getId() == memberId ) {
+                        // Enum degeri degistirildi
+                        ((Book) book).setStatus(Status.LENT);
+                        inc_book_issue(memberId);
+
+                        if (faculty.getNoBooksIssue()<5){
+
+                            // kiralama ucretini yansit .
+                            ((Faculty) faculty).totalAmount += ((Book) book).getPrice();
+                            facultyDebtMap.put(memberId, ((Faculty) faculty).totalAmount);
+
+                            // Eğer öğrenciye ait bir kitap set daha önce oluşturulmuşsa, map icerisine value olarak ekledim .
+                            if (facultyLentMap.containsKey(memberId)) {
+                                facultyLentMap.get(memberId).add((Book) book);
+
+                            } else {
+                                // Eğer öğrenciye ait bir kitap set yoksa, yeni key ile mape ekledim .
+                                Set<Book> lentBooks = new HashSet<>();
+                                lentBooks.add((Book) book);
+                                facultyLentMap.put(memberId, lentBooks);
+                            }
+
+//                        factory.inc_book_issue(memberId); // odunc aldigi kitap +1 oldu.
+                            facultyMap.put(memberId, (Book) book);
+                            System.out.println("Student id: " + faculty.getId() +
+                                    " has lent the book  : " + ((Book) book));
+                            return;
+                        }
+                        else {
+                            System.out.println("Student id : " +faculty.getId()+ " 5 den fazla kitap alinamaz . ");
+                        }
+
                     }
                 }
-            }
-            else {
-                System.out.println("Book with ID : " + bookID + " is not in stock . ");
             }
         }
     }
 
     @Override
-    public void returnBook(int facultyID, int bookID) {
+    public void returnBook(int memberId , int bookID) {
+
         Set <Library> bookList = Library.bookList;
 
         for (Library book : bookList){
             if (((Book)book).getBookID() == bookID){
-                for (Member_Record student : facultyList){
-                    if (student.getId() == facultyID){
+                if (((Book)book).getStatus().equals(Status.IN_STOCK)){
+                    System.out.println("Kitap zaten iade edilmis . ");
+                    return;
+                }
+                else {
+                    for (Member_Record faculty : facultyList){
+                        if (faculty.getId() == memberId ){
 
-                        student.dec_book_issue(facultyID); // kitabi geri getirdi -1 oldu .
-                        ((Book)book).setStatus(Status.IN_STOCK); // kitap geri geldi IN_STOCK diye degistirildi .
-                        System.out.println("Faculty id: " + student.getId() +
-                                " has returned the book. Book's current status : " + ((Book)book).getStatus());
+                            faculty.dec_book_issue(memberId); // kitabi geri getirdi -1 oldu .
+
+                            ((Book)book).setStatus(Status.IN_STOCK); // kitap geri geldi IN_STOCK diye degistirildi .
+                            if (faculty.getNoBooksIssue()>0){
+                                ((Faculty) faculty).totalAmount -= ((Book) book).getPrice();
+                                facultyDebtMap.put(memberId, ((Faculty) faculty).totalAmount);
+                                facultyLentMap.get(memberId).remove((Book) book);
+                                System.out.println("Student id: " + faculty.getId() +
+                                        " has returned the book : " + ((Book)book));
+
+                            }
+
+                        }
                     }
                 }
+
             }
         }
 
@@ -123,6 +163,54 @@ public class Faculty extends Member_Record implements Reader {
         for (Integer key : keys){
             System.out.println("Faculty id : " + key + " , own this book : " + facultyMap.get(key));
         }
+    }
+
+    public void getFacultyMap() {
+        Set<Integer> keys = facultyDebtMap.keySet();
+        System.out.println("Borclular listesi :" );
+        for (Integer key : keys){
+            System.out.println("Student id : " + key + " , total dept : " + facultyDebtMap.get(key) );
+        }
+    }
+
+    public Map<Integer, Double> getFacultyDebtMap() {
+        return facultyDebtMap;
+    }
+
+    public void getFacultyLentMap() {
+        Set<Integer> keys = facultyLentMap.keySet();
+        System.out.println("Kiradaki kitaplar : ");
+        for (Integer key : keys){
+            System.out.println("Student id : " + key + " , book status " + facultyLentMap.get(key));
+        }
+    }
+
+    @Override
+    public boolean inc_book_issue(int memberId) {
+        for (Faculty faculty : facultyList){
+
+            if (faculty.getNoBooksIssue() <5){
+                faculty.setNoBooksIssue(faculty.getNoBooksIssue()+1);
+                return true;
+            }
+
+        }
+        System.out.println("5 den fazla kitap alinamaz. ");
+        return false;
+    }
+
+    @Override
+    public boolean dec_book_issue(int memberId) {
+        for (Faculty faculty : facultyList){
+
+            if (faculty.getNoBooksIssue() >0){
+                faculty.setNoBooksIssue(faculty.getNoBooksIssue()-1);
+                return true;
+            } else if (faculty.getNoBooksIssue()==0) {
+                System.out.println("Kiralanmis kitabi yok");
+            }
+        }
+        return false;
     }
 
     @Override
