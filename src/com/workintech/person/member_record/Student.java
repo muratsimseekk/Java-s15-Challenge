@@ -64,7 +64,9 @@ public class Student extends Member_Record implements Reader {
 
         while (iterator.hasNext()) {
             Library book = iterator.next();
-            if (book instanceof Book && ((Book) book).getBookID() == bookID && ((Book)book).getStatus().equals(Status.IN_STOCK)) {
+
+
+               if (((Book) book).getBookID() == bookID && ((Book)book).getStatus().equals(Status.IN_STOCK))
                 for (Member_Record student : getMemberList()) {
                     if (student.getId() == memberId) {
                         ((Student) student).totalAmount += ((Book) book).getPrice();
@@ -79,8 +81,7 @@ public class Student extends Member_Record implements Reader {
                     }
                 }
             }
-        }
-        System.out.println("Book with ID " + bookID + " or Student with ID " + memberId + " not found.");
+
     }
 
     @Override
@@ -99,6 +100,10 @@ public class Student extends Member_Record implements Reader {
                         // Enum degeri degistirildi
                         ((Book) book).setStatus(Status.LENT);
                         student.inc_book_issue(memberId); // odunc aldigi kitap +1 oldu.
+
+                        // kiralama ucretini yansit .
+                        ((Student) student).totalAmount += ((Book) book).getPrice();
+                        studentDeptMap.put(memberId, ((Student) student).totalAmount);
 
                         // Eğer öğrenciye ait bir kitap set daha önce oluşturulmuşsa, map icerisine value olarak ekledim .
                         if (studentLentMap.containsKey(memberId)) {
@@ -167,6 +172,10 @@ public class Student extends Member_Record implements Reader {
         for (Integer key : keys){
             System.out.println("Student id : " + key + " , total dept : " + studentDeptMap.get(key) );
         }
+    }
+
+    public Map<Integer, Double> getStudentDeptMap() {
+        return studentDeptMap;
     }
 
     public void getStudentLentMap() {

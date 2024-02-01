@@ -162,11 +162,15 @@ public class Main {
   student.borrowBook(1,2);
   student.borrowBook(1,13); // Kitap kiralandigindan tekrar kiralanamaz. Sistemde yok .
   student.borrowBook(2,11);
+  student.borrowBook(1,14);
   //Kiradaki kitaplarin listesi
   student.getStudentLentMap();
 
   System.out.println("***************");
   student.returnBook(1,2);
   student.returnBook(1,2);
+
+  System.out.println("***************");
+  System.out.println(student.getStudentDeptMap());;
  }
 }
